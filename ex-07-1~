@@ -168,6 +168,7 @@
     2                            1006 halt
 
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 1`， 请问变量x的值是什么？
+加入-c可以得出结果，结果如下所示。
  2000          Thread 0                Thread 1         
     0   
     0   1000 mov 2000, %ax
@@ -193,6 +194,7 @@
     1                            1006 halt
 
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 2`， 请问变量x的值是什么？ 
+加入-c可以得出结果，结果如下所示。
  2000          Thread 0                Thread 1         
     0   
     0   1000 mov 2000, %ax
@@ -216,6 +218,7 @@
     1                            1006 halt
 
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -a bx=1 -t 2 -M 2000 -i 1`， 请问变量x的值是什么？ 
+加入-c可以得出结果，结果如下所示。
  2000          Thread 0                Thread 1         
     0   
     0   1000 mov 2000, %ax
@@ -246,3 +249,13 @@
     1   ----- Halt;Switch -----  ----- Halt;Switch -----  
     1   ------ Interrupt ------  ------ Interrupt ------  
     1                            1006 halt
+
+
+3. （spoc） 了解software-based lock, hardware-based lock, [software-hardware-lock代码目录](https://github.com/chyyuu/ucore_lab/tree/master/related_info/lab7/software-hardware-locks)
+
+  - 理解flag.s,peterson.s,test-and-set.s,ticket.s,test-and-test-and-set.s 请通过x86.py分析这些代码是否实现了锁机制？请给出你的实验过程和结论说明。能否设计新的硬件原子操作指令Compare-And-Swap,Fetch-And-Add？
+flag.s没有实现好，根据“./x86.py -p flag.s -t 2 -i 1 -c -M count”的结果，count最后为1，说明没有锁好。
+peterson.s没有实现好，根据“./x86.py -p peterson.s -t 2 -i 1 -c -M count”的结果，count最后为1，说明没有锁好。
+根据不完全的测试，test-and-set.s应该是锁好了的。
+根据不完全的测试，ticket.s应该是锁好了的。
+
