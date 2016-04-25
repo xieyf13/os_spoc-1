@@ -1,7 +1,5 @@
 .var mutex
 .var ptr
-.var expected
-.var new
 
 .main
 
