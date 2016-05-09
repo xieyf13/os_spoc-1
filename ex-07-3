@@ -1,0 +1,8 @@
+cvp->count含义是什么？cvp->count是否可能<0, 是否可能>1？
+    cvp->count的含义是进入cond_wait的个数。它可能<0也可能>1，这是因为它实现时没完全锁好，可能有多个进入cond_wait，而对cvp->count没有锁好。理论上，它应该只能0和1。
+cvp->owner->next_count含义是什么？cvp->owner->next_count是否可能<0, 是否可能>1？
+    cvp->owner->next_count含义是进入cond_signal的个数。它只能为0或1。因为实现时会保证每次最多只有一个进入signal_cv，这样它不会>1，又因为它代表次数，所以它不可能<0。
+目前的lab7-answer中管程的实现是Hansen管程类型还是Hoare管程类型？
+    Hoare管程类型。
+现在的管程（条件变量）实现是否有bug?
+    根据第一个问题，bug似乎是有的。
